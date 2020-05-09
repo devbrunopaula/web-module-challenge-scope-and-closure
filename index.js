@@ -18,6 +18,7 @@ function processFirstItem(stringList, callback) {
   return callback(stringList[0])
 }
 
+//console.log(processFirstItem(['foo','bar'], (x) => x + x ))
 // ⭐️ Example Challenge END ⭐️
 
 
@@ -27,7 +28,7 @@ function processFirstItem(stringList, callback) {
 // Study the code for counter1 and counter2. Answer the questions below.
  
  //? 1. What is the difference between counter1 and counter2?
-//!  Counter1 creates a closure between the context of the count variable and  the new updated value of the variable.
+//!  Counter1 creates a closure between the context of the count variable and the new updated value of the count variable.
    
 //!   Counter2  The counter2 function and the count variable are both delcare in the global scope,
 //!   when the  counter2 function is called it has to reach its outer scope to reference the count variable.
@@ -62,11 +63,11 @@ function counter2() {
 //?    Write a function called `inning` that generates a random number of points that a team scored in an inning. 
 //?    This should be a whole number between 0 and 2. */
 
-function inning(max) {
+function inning() {
   const randomNumber = Math.floor(Math.random() * 3);
   return randomNumber
 }
- //! console.log(inning(3))
+//! console.log(inning(3))
 
  
 
@@ -90,15 +91,15 @@ function finalScore(score, innings){
   let awayTeamScore = 0;
 
   for(let i = 0; i < innings; i++){
-    homeTeamScore = homeTeamScore + score();
-    awayTeamScore = awayTeamScore + score();
+    homeTeamScore += score();
+    awayTeamScore += score();
   }
 
   return {'Home': homeTeamScore, 'Away': awayTeamScore}
   
 }
 
-// console.log(finalScore(inning, 9))
+ //! console.log(finalScore(inning, 9))
 
 // Task 4: 
 
@@ -121,46 +122,34 @@ function finalScore(score, innings){
 
 // Final Score: 6 - 10 */
 
-function test(cb, innings) {
+function test(cb, numOfInnings) {
+  let suffix = ""
+	let home = 0;
+	let away = 0;
 
-  let home = []
-  let away = []
-  let inningsRank = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th']
-  let plays = ''
-       
-       for(let i = 0; i <= innings; i++){
-         home.push(cb())
-         away.push(cb())
-        
-     }
-console(1)
+
+	for(let i = 0; i < numOfInnings; i++){
+    if (i+1 === 1) {
+      suffix = "st"
+    } else if (i+1 === 2) {
+      suffix = "nd"
+    } else if (i+1 === 3) {
+      suffix = "rd"
+    } else {
+      suffix = "th"
+    }
+
+    if (i <= 9) {
+      home += cb()
+		  away += cb()
+    } else if (i > 9 && i < numOfInnings){
+      home = home
+      away = away
+    } else {
       
-     
-
+    }
+    console.log(`${i+1}${suffix} inning: ${home} - ${away}`)
+	}
 }
-
-//console.log(test(inning,9))
-
-
-function scoreboard(scorePerInning, numberOfInnings) {
-  let homeTeamScore = 0;
-  let awayTeamScore = 0;
-  let innings = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th']
-
-  for(let i = 0; i < numberOfInnings; i++){
-    homeTeamScore =  scorePerInning() + homeTeamScore
-    awayTeamScore =  scorePerInning() + awayTeamScore
-    console.log((`${innings[i]} inning: Home: ${homeTeamScore} - Away: ${awayTeamScore}`))
-  }
-
-  
-  if(homeTeamScore === awayTeamScore){
-    return `Exta Time Home Team ${homeTeamScore+1} - ${awayTeamScore} Away Team `
-  }else {
-  return   `Final Score: Home: ${homeTeamScore} - Away: ${awayTeamScore}`
-  }
-  
-}
-console.log(scoreboard(inning, 9))
-
+ console.log(test(inning,9))
 
